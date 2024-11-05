@@ -1,17 +1,21 @@
 .header-content {
     min-height: 85vh;
-    background: linear-gradient(rgba(141, 39, 174, 0.3), rgba(141, 39, 174, 0.5)), url("../../assets/image/background.jpg") center/cover no-repeat;
+    background: linear-gradient(rgba(216, 244, 225, 0.5), rgba(191, 110, 219, 0.2)), url("../../assets/image/background.jpg") center/cover no-repeat;
     flex-direction: column;
 }
 
 .header-title {
+    margin-bottom: 40px;
     font-size: 4.2rem;
 }
 
 .header-text {
+    background-color: rgba(216, 244, 225, 0.4);
+    border-radius: 20px;
     margin-top: -1.8rem;
     margin-bottom: 2.8rem;
-    opacity: 0.8;
+    color: rgb(41, 51, 28);
     max-width: 770px;
+    
 }
 

@@ -1,9 +1,46 @@
-import React from 'react'
+import React from "react";
+import { useGlobalContext } from "../../context";
+import Book from "../BookList/Book"
+import Loading from "../Loader/Loader";
+import coverImg from "../../assets/image/coverBook.jpg";
+import "./BookList.css";
+
+// https://covers.openlibrary.org/b/id/240727-S.jpg
 
 const BookList = () => {
-  return (
-    <div>BookList</div>
-  )
-}
+  const { books, loading, resultTitle } = useGlobalContext();
+  const bookWithCovers = books.map((singleBook) => {
+    return {
+      ...singleBook,
+      id: singleBook.id.replace("/works/", ""),
+      cover_img: singleBook.cover_id
+        ? `https://covers.openlibrary.org/b/id/${singleBook.cover_id}-L.jpg`
+        : coverImg,
+    };
+  });
 
-export default BookList
+  if (loading) return <Loading />;
+
+  console.log(bookWithCovers);
+  
+  return (
+    <section className="booklist">
+      <div className="container">
+        <div className="section-title">
+          <h2>{resultTitle}</h2>
+        </div>
+        <div className="booklist-content grid">
+          {
+            bookWithCovers.slice(0, 30).map((item, index) => {
+              return (
+                <Book key = {index} {...item} />
+              )
+            })
+          }
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default BookList;
