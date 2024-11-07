@@ -1,10 +1,10 @@
 import React, { useState, useContext, useEffect, createContext } from 'react';
 import { useCallback } from 'react';
-const url = 'https://openlibrary.org/search.json?title=';
+const url = 'http://localhost:7612/api/v1/book/search?title=h';
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [searchTerm, setSearchTerm] = useState('Once upon a time');
+  const [searchTerm, setSearchTerm] = useState('');
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [resultTitle, setResultTitle] = useState("");
@@ -13,29 +13,27 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await fetch(`${url}${searchTerm}`);
-      const data = await response.json();
-      const { docs } = data;
-      if (docs) {
-        const newBooks = docs.slice(0, 20).map((bookSingle) => {
-          const {
-            key,
-            author_name,
-            cover_i,
-            edition_count,
-            first_publish_year,
-            title,
-          } = bookSingle;
+      const data = await response.json();      
+      const { booksData } = data;
+      
+      if (Array.isArray(booksData) && booksData.length) {
+        const newBooks = booksData.slice(0, 20).map((bookSingle) => {
           return {
-            id: key,
-            author: author_name,
-            cover_id: cover_i,
-            edition_count: edition_count,
-            first_publish_year: first_publish_year,
-            title: title,
+            id: bookSingle._id,
+            title: bookSingle.title,
+            author: bookSingle.author_id?.name,
+            translator: bookSingle.translator_id?.name,
+            genre: bookSingle.genre_id?.name,
+            publisher: bookSingle.publisher_id?.name,
+            publisher_year: bookSingle.publisher_year,
+            isbn_10: bookSingle.isbn_10,
+            isbn_13: bookSingle.isbn_13,
           };
         });
+        console.log('aa',newBooks);
 
         setBooks(newBooks);
+        
 
         if (newBooks.length > 1) {
           setResultTitle('Your search result');
