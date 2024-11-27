@@ -1,77 +1,73 @@
-import React, { useState, useContext, useEffect, createContext } from 'react';
-import { useCallback } from 'react';
-const url = 'http://localhost:7612/api/v1/book/search?title=h';
-const AuthContext = createContext();
+// import { jwtDecode } from 'jwt-decode';
+import React, { useState, createContext, useCallback } from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { URL_USER } from './utils/constant';
+// import axios from 'axios';
 
-const AuthProvider = ({ children }) => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [books, setBooks] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [resultTitle, setResultTitle] = useState("");
+export const AuthContext = createContext();
 
-  const fetchBook = useCallback(async () => {
-    setLoading(true);
-    try {
-      const response = await fetch(`${url}${searchTerm}`);
-      const data = await response.json();      
-      const { booksData } = data;
-      
-      if (Array.isArray(booksData) && booksData.length) {
-        const newBooks = booksData.slice(0, 20).map((bookSingle) => {
-          return {
-            id: bookSingle._id,
-            title: bookSingle.title,
-            author: bookSingle.author_id?.name,
-            translator: bookSingle.translator_id?.name,
-            genre: bookSingle.genre_id?.name,
-            publisher: bookSingle.publisher_id?.name,
-            publisher_year: bookSingle.publisher_year,
-            isbn_10: bookSingle.isbn_10,
-            isbn_13: bookSingle.isbn_13,
-          };
-        });
-        console.log('aa',newBooks);
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [registerInformation, setRegisterInformation] = useState({
+    fullName: '',
+    email: '',
+    password: '',
+    phone: '',
+    address: '',
+    ward: '',
+    district: '',
+    city: '',
+  });
 
-        setBooks(newBooks);
-        
+  const [loginInformation, setLoginInformation] = useState({
+    email: '',
+    password: ''
+  })
 
-        if (newBooks.length > 1) {
-          setResultTitle('Your search result');
-        } else {
-          setResultTitle('No Search Result Found!');
-        }
-      } else {
-        setBooks([])
-        setResultTitle("No Search Result Found!")
+  // const navigate = useNavigate();
+
+  // const getUserId = () => {
+  //   const token = localStorage.getItem('User');
+  //   if (!token) return null;
+  //   const decodedToken = jwtDecode(token);
+  //   return decodedToken._id;
+  // };
+
+  const updateRegisterInformation = useCallback((info) => {
+    setRegisterInformation(info);
+  }, []);
+
+  const registerUser = useCallback(
+    async (e) => {
+      e.preventDefault();
+      const response = await fetch(`${URL_USER}/register`,
+        {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(registerInformation)
+        })
+
+      if (!response.ok) {
+        alert('Đăng ký thất bại');
       }
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-    }
-  }, [searchTerm]);
 
-  useEffect(() => {
-    fetchBook();
-  }, [searchTerm, fetchBook]);
+      alert('Đăng ký thành công')
+    },
+    [registerInformation]
+  );
 
   return (
     <AuthContext.Provider
       value={{
-        loading,
-        books,
-        setSearchTerm,
-        resultTitle,
-        setResultTitle,
+        user,
+        registerInformation,
+        updateRegisterInformation,
+        registerUser,
       }}
     >
       {children}
     </AuthContext.Provider>
   );
 };
-
-export const useGlobalContext = () => {
-  return useContext(AuthContext);
-};
-
-export { AuthContext, AuthProvider };

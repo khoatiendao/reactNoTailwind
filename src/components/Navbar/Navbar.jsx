@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import logoImg from "../../assets/image/logo.png";
+import logoImg2 from "../../assets/image/logo2.png";
 import "./Navbar.css";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 
@@ -13,8 +13,7 @@ const Navbar = () => {
       <div className='container navbar-content flex'>
         <div className='brand-and-toggler flex flex-sb'>
           <Link to = "/" className='navbar-brand flex'>
-            <img src = {logoImg} alt = "site logo" />
-            <span className='text-uppercase fw-7 fs-24 ls-1'>bookhub</span>
+            <img className="logo" src = {logoImg2} alt = "site logo" />
           </Link>
           <button type = "button" className='navbar-toggler-btn' onClick={handleNavbar}>
             <HiOutlineMenuAlt3 size = {35} style = {{
@@ -26,10 +25,16 @@ const Navbar = () => {
         <div className={toggleMenu ? "navbar-collapse show-navbar-collapse" : "navbar-collapse"}>
           <ul className = "navbar-nav">
             <li className='nav-item'>
-              <Link to = "book" className='nav-link text-uppercase text-black fs-22 fw-6 ls-1'>Home</Link>
+              <Link to = "book" className='nav-link text-uppercase text-black fs-22 fw-6 ls-1'>Trang chủ</Link>
             </li>
             <li className='nav-item'>
-              <Link to = "about" className='nav-link text-uppercase text-black fs-22 fw-6 ls-1'>about</Link>
+              <Link to = "about" className='nav-link text-uppercase text-black fs-22 fw-6 ls-1'>Về web</Link>
+            </li>
+            <li className='nav-item'>
+              <Link to = "login" className='nav-link text-uppercase text-black fs-22 fw-6 ls-1'>Đăng nhập</Link>
+            </li>
+            <li className='nav-item'>
+              <Link to = "signup" className='nav-link text-uppercase text-black fs-22 fw-6 ls-1'>Đăng ký</Link>
             </li>
           </ul>
         </div>

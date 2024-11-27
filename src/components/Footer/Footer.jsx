@@ -21,7 +21,7 @@ const Footer = () => {
                 <a href="#">Translator</a>
               </li>
               <li>
-                <a href="#">Subject</a>
+                <a href="#">Publisher</a>
               </li>
             </ul>
           </div>

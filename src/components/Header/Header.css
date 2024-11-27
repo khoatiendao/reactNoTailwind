@@ -1,11 +1,10 @@
 .header-content {
-    min-height: 85vh;
-    background: linear-gradient(rgba(216, 244, 225, 0.5), rgba(191, 110, 219, 0.2)), url("../../assets/image/background.jpg") center/cover no-repeat;
+    min-height: 55vh;
+    background-color: #2d3e48; 
     flex-direction: column;
 }
 
 .header-title {
-    margin-bottom: 40px;
     font-size: 4.2rem;
 }
 
@@ -14,7 +13,7 @@
     border-radius: 20px;
     margin-top: -1.8rem;
     margin-bottom: 2.8rem;
-    color: rgb(41, 51, 28);
+    color: #FFFFE0;
     max-width: 770px;
     
 }

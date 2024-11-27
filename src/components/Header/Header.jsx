@@ -8,16 +8,15 @@ const Header = () => {
     <div className="holder">
       <header className="header">
         <Navbar />
-        <div className="header-content flex flex-c text-center text-black">
+        <div className="header-content flex flex-c text-center text-white">
           <h2 className="header-title text-capitalize">
-            Find your book of choice
+            Khám phá cuốn sách hoàn hảo của bạn
           </h2>
           <br />
           <p className="header-text fs-26 fw-7 text-capitalize">
-            Finding books has become incredibly convenient in the digital age.
-            Online platforms and digital libraries offer extensive catalogs
-            where users can search for books by title, author, genre, or
-            keywords.
+            Việc tìm sách đã trở nên vô cùng tiện lợi trong thời đại công nghệ. Nền tảng trực tuyến và thư viện kỹ thuật số cung cấp các danh
+            mục phong phú nơi người dùng có thể tìm kiếm sách theo tiêu đề, tác
+            giả hoặc từ khóa.
           </p>
           <SearchForm />
         </div>
