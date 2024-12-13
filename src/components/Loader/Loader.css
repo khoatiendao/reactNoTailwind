@@ -27,7 +27,7 @@
 }
 
 .book {
-    border: 4px solid #8d27ae;
+    border: 4px solid #2d3e48;
     border-radius: 0.25rem;
     padding: 5rem;
     perspective: 37.5rem;
@@ -46,11 +46,11 @@
     left: 0.25rem;
     top: 0.25rem;
 
-    border: 2.8px solid #8d27ae;
+    border: 2.8px solid #2d3e48;
 
     background-color: #FFFFFF;
     background-image: repeating-linear-gradient(
-        #8d27ae 0 0.125rem,
+        #2d3e48 0 0.125rem,
         hsla(223, 10%, 10%, 0) 0.125rem 0.5rem
     );
     background-repeat: no-repeat;

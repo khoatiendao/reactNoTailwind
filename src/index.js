@@ -9,6 +9,7 @@ import BookDetail from './components/BookDetail/BookDetail';
 import './index.css';
 import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
+import Profile from './pages/Profile/Profile';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,6 +18,7 @@ root.render(
       <Routes>
         <Route path="signup" element={<Signup />} />
         <Route path="login" element={<Login />} />
+        <Route path="profile" element={<Profile />} />
         <Route path="/" element={<Home />}>
           <Route path="about" element={<About />} />
           <Route index path="book" element={<BookList />} />

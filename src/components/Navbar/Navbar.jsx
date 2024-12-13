@@ -1,40 +1,83 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import logoImg2 from "../../assets/image/logo2.png";
 import "./Navbar.css";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
+import { AuthContext } from "../../context";
 
 const Navbar = () => {
+  const { username } = useContext(AuthContext);
   const [toggleMenu, setToggleMenu] = useState(false);
-  const handleNavbar = () => setToggleMenu(!toggleMenu)
+  const handleNavbar = () => setToggleMenu(!toggleMenu);
 
   return (
-    <nav className='navbar' id = "navbar">
-      <div className='container navbar-content flex'>
-        <div className='brand-and-toggler flex flex-sb'>
-          <Link to = "/" className='navbar-brand flex'>
-            <img className="logo" src = {logoImg2} alt = "site logo" />
+    <nav className="navbar" id="navbar">
+      <div className="container-nav navbar-content flex">
+        <div className="brand-and-toggler flex flex-sb">
+          <Link to="/" className="navbar-brand flex">
+            <img className="logo" src={logoImg2} alt="site logo" />``
           </Link>
-          <button type = "button" className='navbar-toggler-btn' onClick={handleNavbar}>
-            <HiOutlineMenuAlt3 size = {35} style = {{
-              color: `${toggleMenu ? "#fff" : "#010101"}`
-            }} />
+          <button
+            type="button"
+            className="navbar-toggler-btn"
+            onClick={handleNavbar}
+          >
+            <HiOutlineMenuAlt3
+              size={35}
+              style={{
+                color: `${toggleMenu ? "#fff" : "#010101"}`,
+              }}
+            />
           </button>
         </div>
 
-        <div className={toggleMenu ? "navbar-collapse show-navbar-collapse" : "navbar-collapse"}>
-          <ul className = "navbar-nav">
-            <li className='nav-item'>
-              <Link to = "book" className='nav-link text-uppercase text-black fs-22 fw-6 ls-1'>Trang chủ</Link>
+        <div
+          className={
+            toggleMenu
+              ? "navbar-collapse show-navbar-collapse"
+              : "navbar-collapse"
+          }
+        >
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <Link
+                to="book"
+                className="nav-link text-uppercase text-black fs-22 fw-6 ls-1"
+              >
+                Trang chủ
+              </Link>
             </li>
-            <li className='nav-item'>
-              <Link to = "about" className='nav-link text-uppercase text-black fs-22 fw-6 ls-1'>Về web</Link>
+            <li className="nav-item">
+              <Link
+                to="about"
+                className="nav-link text-uppercase text-black fs-22 fw-6 ls-1"
+              >
+                Về web
+              </Link>
             </li>
-            <li className='nav-item'>
-              <Link to = "login" className='nav-link text-uppercase text-black fs-22 fw-6 ls-1'>Đăng nhập</Link>
+            <li className="nav-item">
+              <Link
+                to="login"
+                className="nav-link text-uppercase text-black fs-22 fw-6 ls-1"
+              >
+                Đăng nhập
+              </Link>
             </li>
-            <li className='nav-item'>
-              <Link to = "signup" className='nav-link text-uppercase text-black fs-22 fw-6 ls-1'>Đăng ký</Link>
+            <li className="nav-item">
+              <Link
+                to="signup"
+                className="nav-link text-uppercase text-black fs-22 fw-6 ls-1"
+              >
+                Đăng ký
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                to="profile"
+                className="nav-link text-uppercase text-black fs-22 fw-6 ls-1"
+              >
+                {username}
+              </Link>
             </li>
           </ul>
         </div>

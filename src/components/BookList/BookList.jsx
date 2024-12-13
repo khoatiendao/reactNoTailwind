@@ -37,7 +37,6 @@ const BookList = () => {
             isbn_13: bookSingle.isbn_13,
           };
         });
-        console.log("aa", newBooks);
 
         setBooks(newBooks);
 
@@ -80,8 +79,6 @@ const BookList = () => {
   });
 
   if (loading) return <Loading />;
-
-  console.log("abascasdca", bookWithCovers);
 
   return (
     <section className="booklist">

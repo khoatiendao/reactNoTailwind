@@ -1,10 +1,7 @@
-// import { jwtDecode } from 'jwt-decode';
-import React, { useState, createContext, useCallback } from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import { toast } from 'react-toastify';
+import React, { useState, createContext, useCallback, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import { URL_USER } from './utils/constant';
-// import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
 
 export const AuthContext = createContext();
 
@@ -23,17 +20,40 @@ export const AuthProvider = ({ children }) => {
 
   const [loginInformation, setLoginInformation] = useState({
     email: '',
-    password: ''
-  })
+    password: '',
+  });
 
-  // const navigate = useNavigate();
+  const [userId, setUserId] = useState("");
+  const getUserId = () => {
+    const token = localStorage.getItem('User');
+    if (!token) return null;
+    const decodedToken = jwtDecode(token);
+    return decodedToken._id;
+  };
 
-  // const getUserId = () => {
-  //   const token = localStorage.getItem('User');
-  //   if (!token) return null;
-  //   const decodedToken = jwtDecode(token);
-  //   return decodedToken._id;
-  // };
+  useEffect(() => {
+    const id = getUserId();
+    if(id) setUserId(id)
+  },[])
+
+  const [username, setUsername] = useState("");
+  const getUserName = () => {
+    const token = localStorage.getItem('User');
+    
+    if(!token) return null;
+    try {
+      const decodedToken = jwtDecode(token);      
+      return decodedToken.fullName;
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    const name = getUserName();
+    if(name) setUsername(name);
+  },[])
 
   const updateRegisterInformation = useCallback((info) => {
     setRegisterInformation(info);
@@ -42,20 +62,42 @@ export const AuthProvider = ({ children }) => {
   const registerUser = useCallback(
     async (e) => {
       e.preventDefault();
-      const response = await fetch(`${URL_USER}/register`,
-        {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(registerInformation)
-        })
+      const response = await fetch(`${URL_USER}/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(registerInformation),
+      });
 
       if (!response.ok) {
         alert('Đăng ký thất bại');
       }
 
-      alert('Đăng ký thành công')
+      alert('Đăng ký thành công');
     },
     [registerInformation]
+  );
+
+  const updateInformationLogin = useCallback((info) => {
+    setLoginInformation(info);
+  }, []);
+
+  const loginUser = useCallback(async (e) => {
+      e.preventDefault();
+      const response = await fetch(`${URL_USER}/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(loginInformation)
+      });
+
+      if (!response.ok) {
+        alert('Đăng nhập thất bại');
+      }
+      const userData = await response.json()
+      alert('Đăng nhập thành công');
+      localStorage.setItem('User', JSON.stringify(userData));
+      setUser(userData);
+    },
+    [loginInformation]
   );
 
   return (
@@ -65,6 +107,11 @@ export const AuthProvider = ({ children }) => {
         registerInformation,
         updateRegisterInformation,
         registerUser,
+        loginUser,
+        loginInformation,
+        updateInformationLogin,
+        username,
+        userId
       }}
     >
       {children}
