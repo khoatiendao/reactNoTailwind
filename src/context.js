@@ -2,6 +2,35 @@ import React, { useState, createContext, useCallback, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import { URL_USER } from './utils/constant';
 import { jwtDecode } from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
+import { Bounce, toast } from 'react-toastify';
+
+const success = (message) => {
+  toast.success(message, {
+    position: "top-center",
+    autoClose: 1500,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+    transition: Bounce,
+  });
+};
+const failed = (message) => {
+  toast.error(message, {
+    position: "top-center",
+    autoClose: 1500,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+    transition: Bounce,
+  });
+};
 
 export const AuthContext = createContext();
 
@@ -69,10 +98,10 @@ export const AuthProvider = ({ children }) => {
       });
 
       if (!response.ok) {
-        alert('Đăng ký thất bại');
+        failed('Đăng ký thất bại')
       }
 
-      alert('Đăng ký thành công');
+      success('Đăng ký thành công');
     },
     [registerInformation]
   );
@@ -80,6 +109,8 @@ export const AuthProvider = ({ children }) => {
   const updateInformationLogin = useCallback((info) => {
     setLoginInformation(info);
   }, []);
+
+  let navigate = useNavigate();
 
   const loginUser = useCallback(async (e) => {
       e.preventDefault();
@@ -90,15 +121,21 @@ export const AuthProvider = ({ children }) => {
       });
 
       if (!response.ok) {
-        alert('Đăng nhập thất bại');
+        failed('Đăng nhập thất bại');
       }
       const userData = await response.json()
-      alert('Đăng nhập thành công');
+      success('Đăng nhập thành công');
       localStorage.setItem('User', JSON.stringify(userData));
+      navigate('/')
       setUser(userData);
     },
-    [loginInformation]
+    [loginInformation, navigate]
   );
+
+  // const verifyUser = useCallback(async(e) => {
+  //   e.preventDefault();
+  //   const response = await
+  // })
 
   return (
     <AuthContext.Provider

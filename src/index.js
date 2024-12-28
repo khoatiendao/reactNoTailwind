@@ -10,11 +10,13 @@ import './index.css';
 import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
 import Profile from './pages/Profile/Profile';
+import { ToastContainer } from 'react-toastify';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <AuthProvider>
-    <BrowserRouter>
+  <BrowserRouter>
+    <AuthProvider>
+      <ToastContainer />
       <Routes>
         <Route path="signup" element={<Signup />} />
         <Route path="login" element={<Login />} />
@@ -25,6 +27,6 @@ root.render(
           <Route path="/book/:id" element={<BookDetail />} />
         </Route>
       </Routes>
-    </BrowserRouter>
-  </AuthProvider>
+    </AuthProvider>
+  </BrowserRouter>
 );

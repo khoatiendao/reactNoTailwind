@@ -13,9 +13,9 @@ const Navbar = () => {
   return (
     <nav className="navbar" id="navbar">
       <div className="container-nav navbar-content flex">
-        <div className="brand-and-toggler flex flex-sb">
+        <div className="brand-and-toggler">
           <Link to="/" className="navbar-brand flex">
-            <img className="logo" src={logoImg2} alt="site logo" />``
+            <img className="logo" src={logoImg2} alt="site logo" />
           </Link>
           <button
             type="button"
@@ -54,7 +54,7 @@ const Navbar = () => {
               >
                 Về web
               </Link>
-            </li>
+            </li>            
             <li className="nav-item">
               <Link
                 to="login"
@@ -62,8 +62,7 @@ const Navbar = () => {
               >
                 Đăng nhập
               </Link>
-            </li>
-            <li className="nav-item">
+              <span className="fs-22">/</span>
               <Link
                 to="signup"
                 className="nav-link text-uppercase text-black fs-22 fw-6 ls-1"
